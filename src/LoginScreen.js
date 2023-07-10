@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './LoginScreen.css'; // CSS file for styling
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import logo from './logo.png';
 const LoginScreen = () => {
     const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -70,7 +71,7 @@ const LoginScreen = () => {
   return (
     <div className="login-screen">
       {loading ? (<div className='loading'>Loading...</div>) : (<div className="login-form">
-        <img src="apple-logo.png" alt="Apple Logo" className="logo" />
+        <img src={logo} alt="Logo" className="logo" />
         <h2 className="title">Welcome Back</h2>
         <form onSubmit={handleLogin}>
           <input
