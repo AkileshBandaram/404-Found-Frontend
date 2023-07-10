@@ -24,7 +24,7 @@ const RegisterScreen = () => {
 
           if (data.status === 1) {
             // Redirect to home screen
-            
+            navigate("/home")
           }
         } catch (error) {
           console.log(error);
