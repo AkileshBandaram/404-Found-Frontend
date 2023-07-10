@@ -37,7 +37,10 @@ const HomeScreen = () => {
     // Handle donate logic here
     navigate('/payment');
   };
-
+  const handleLogout = ()=>{
+    localStorage.clear();
+    navigate("/")
+  }
   return (
     <div className="home-screen">
       {loading ? (<div className='loading'>Loading...</div>): (<div className="content">
@@ -45,6 +48,7 @@ const HomeScreen = () => {
         <button className="donate-button" onClick={handleDonate}>
           Donate $10
         </button>
+        <p className="create-account" onClick={handleLogout}>Logout</p>
       </div>)}
       
     </div>
