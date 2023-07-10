@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+.login-screen {
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-form {
+  background-color: #000;
+  padding: 40px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  font-family: 'Roboto', sans-serif; /* Applied the new font */
+}
+
+.logo {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 20px;
+}
+
+.title {
+  color: #fff;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #000;
+  color: #fff;
+  outline: none;
+  transition: background-color 0.3s;
+}
+
+input:focus {
+  background-color: #333;
+}
+.loading{
+  color:white
+}
+.login-button {
+  background-color: #0070c9;
+  color: #fff;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  margin-left: 10px;
+
+  font-family: 'Roboto', sans-serif; /* Applied the new font */
+}
+
+.forgot-password,
+.create-account {
+  color: #0070c9;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.forgot-password:hover,
+.create-account:hover {
+  text-decoration: underline;
+}
