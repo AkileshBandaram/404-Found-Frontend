@@ -35,7 +35,9 @@ const PaymentScreen = () => {
           setEmail(data.user.user_email);
           if (data.user.user_token !== '') {
             setisToken(true);
-            const token = JSON.parse(data.user.user_token);
+            const bytes = CryptoJS.AES.decrypt(data.user.user_token, 'A7mBSxZrjCYZObWd1ziU5wYqm5KyFUqK');
+            const decryptedToken = bytes.toString(CryptoJS.enc.Utf8);
+            const token = JSON.parse(decryptedToken);
             console.log(token)
             setToken(token.token);
             setSavedCard(token.card);
@@ -54,9 +56,15 @@ const PaymentScreen = () => {
 
   const handleCardNumberChange = (event) => {
     const { value } = event.target;
-    const formattedValue = value.replace(/\s/g, '').replace(/(\d{4})(?=\d)/g, '$1 ');
+    const formattedValue = value.replace(/\D/g, ''); // Only allow digits
+    const cardNumberGroups = formattedValue.match(/.{1,4}/g); // Split the string into groups of 4 characters
 
-    setCardNumber(formattedValue);
+    if (cardNumberGroups) {
+      const formattedCardNumber = cardNumberGroups.join(' '); // Join the groups with a space in between
+      setCardNumber(formattedCardNumber);
+    } else {
+      setCardNumber(formattedValue);
+    }
   };
 
   const handleCardHolderChange = (event) => {
@@ -64,11 +72,23 @@ const PaymentScreen = () => {
   };
 
   const handleExpiryDateChange = (event) => {
-    setExpiryDate(event.target.value);
+    const { value } = event.target;
+    const formattedValue = value.replace(/\D/g, ''); // Only allow digits
+
+    let formattedExpiryDate = formattedValue;
+    if (formattedValue.length > 2) {
+      // Insert a slash after the first two characters
+      formattedExpiryDate = formattedValue.slice(0, 2) + '/' + formattedValue.slice(2);
+    }
+
+    setExpiryDate(formattedExpiryDate);
   };
 
   const handleCvvChange = (event) => {
-    setCvv(event.target.value);
+    const { value } = event.target;
+    const formattedValue = value.replace(/\D/g, '').substring(0, 3); // Only allow digits and limit to 3 characters
+
+    setCvv(formattedValue);
   };
 
   const handleSaveCardChange = (event) => {
@@ -97,10 +117,10 @@ const PaymentScreen = () => {
         }
       );
       alert(response.data.message);
-      navigate("/")
+      navigate("/");
     } catch (error) {
       alert('Transaction Failed');
-      navigate("/")
+      navigate("/");
     }
     setLoading(false);
   }
@@ -135,10 +155,10 @@ const PaymentScreen = () => {
         }
       );
       alert(response.data.message);
-      navigate("/")
+      navigate("/");
     } catch (error) {
       alert('Transaction Failed');
-      navigate("/")
+      navigate("/");
     }
     setLoading(false);
   };
@@ -157,7 +177,7 @@ const PaymentScreen = () => {
         <div className="loading">Loading...</div>
       ) : istoken ? (
         <>
-        <div className="credit-card-block">
+          <div className="credit-card-block">
             {/* Dummy credit card block */}
             <div className="dummy-card">
               <div className="card-number">
@@ -173,13 +193,12 @@ const PaymentScreen = () => {
               </div>
             </div>
             <form className='pay_with_token_form' onSubmit={handlePayNowwithToken}>
-          <button type="submit" className="pay-now-button">
-              Pay Now
-            </button>
-          </form>
+              <button type="submit" className="pay-now-button">
+                Pay Now
+              </button>
+            </form>
           </div>
-          
-          </>
+        </>
       ) : (
         <>
           <div className="payment-form">
@@ -190,25 +209,33 @@ const PaymentScreen = () => {
                 placeholder="Card Number"
                 value={cardNumber}
                 onChange={handleCardNumberChange}
+                required
+                maxLength={19}
               />
               <input
                 type="text"
                 placeholder="Card Holder"
                 value={cardHolder}
                 onChange={handleCardHolderChange}
+                required
               />
               <div className="expiry-cvv-container">
                 <input
                   type="text"
-                  placeholder="Expiry Date"
+                  placeholder="MM/YY"
                   value={expiryDate}
                   onChange={handleExpiryDateChange}
+                  required
+                  maxLength={5}
                 />
                 <input
                   type="text"
                   placeholder="CVV"
                   value={cvv}
                   onChange={handleCvvChange}
+                  pattern="[0-9]*" // Only allow numbers
+                  required
+                  maxLength={3}
                 />
               </div>
               <div className="box">
@@ -236,7 +263,7 @@ const PaymentScreen = () => {
                   {cardHolder ? cardHolder.toUpperCase() : 'JOHN DOE'}
                 </div>
                 <div className="expiry-date">
-                  {expiryDate ? expiryDate : '12/23'}
+                  {expiryDate ? expiryDate : 'MM/YY'}
                 </div>
               </div>
             </div>
