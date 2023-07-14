@@ -9,6 +9,7 @@ const RegisterScreen = () => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(true);
+  const baseurl = "http://localhost:3001";
   useEffect(() => {
     const checkAuthToken = async () => {
       // Get the auth_token from local storage
@@ -19,7 +20,7 @@ const RegisterScreen = () => {
           // Set the Authorization header with the token
           axios.defaults.headers.common['Authorization'] = `Bearer ${auth_token}`;
 
-          const response = await axios.get('https://merchant-backend.onrender.com/user');
+          const response = await axios.get(baseurl+'/user');
 
           const data = response.data;
 
@@ -58,7 +59,7 @@ const RegisterScreen = () => {
       user_name:username
     };
     try {
-      const response = await axios.put('https://merchant-backend.onrender.com/auth', requestBody);
+      const response = await axios.put(baseurl+'/auth', requestBody);
 
       const data = response.data;
 

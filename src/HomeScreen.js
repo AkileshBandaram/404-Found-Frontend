@@ -6,6 +6,7 @@ const HomeScreen = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [username, setUsername] = useState('');
+    const baseurl = "http://localhost:3001";
     useEffect(() => {
       const getUserData = async () => {
         try {
@@ -15,7 +16,7 @@ const HomeScreen = () => {
           // Set the Authorization header with the token
           axios.defaults.headers.common['Authorization'] = `Bearer ${auth_token}`;
   
-          const response = await axios.get('https://merchant-backend.onrender.com/user');
+          const response = await axios.get(baseurl+'/user');
   
           const data = response.data;
   
