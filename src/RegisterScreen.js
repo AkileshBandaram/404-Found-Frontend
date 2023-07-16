@@ -9,7 +9,7 @@ const RegisterScreen = () => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(true);
-  const baseurl = "http://localhost:3001";
+  const baseurl = "http://43.204.28.137:3001";
   useEffect(() => {
     const checkAuthToken = async () => {
       // Get the auth_token from local storage

@@ -17,8 +17,8 @@ const PaymentScreen = () => {
   const [savedcard, setSavedCard] = useState('');
   const [savedexp, setSavedExp] = useState('');
   const [savedname,setSavedName]= useState('');
-  const baseurl = "http://localhost:3001";
-  const pay_baseurl = "http://localhost:3002";
+  const baseurl = "http://43.204.28.137:3001";
+  const pay_baseurl = "http://65.2.129.25:3002";
   const navigate = useNavigate();
 
   useEffect(() => {

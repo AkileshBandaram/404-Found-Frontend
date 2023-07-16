@@ -6,7 +6,7 @@ const HomeScreen = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [username, setUsername] = useState('');
-    const baseurl = "http://localhost:3001";
+    const baseurl = "http://43.204.28.137:3001";
     useEffect(() => {
       const getUserData = async () => {
         try {
